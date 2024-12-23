@@ -9,7 +9,7 @@ const pool = new Pool({
     post: 5432
 })
 
-const addUser = (name, email, machineId, token) => {
+const userAdd = (name, email, machineId, token) => {
     pool.query(
         'INSERT INTO users (name, email, machine_id, token) VALUES ($1, $2, $3, $4)',
         [name, email, machineId, token],

@@ -63,6 +63,14 @@ const generateToken = (machineId) => {
 
 }
 
+const registerUser = (name, email, machineId) => {
+
+    const token = generateToken(machineId)
+    userAdd(name, email, machineId, token)
+
+    return { status: true, message: 'succesfully registered user' }
+
+}
 // let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWNoaW5lSWQiOiJtYWNoaW5lMTIzIiwiaWF0IjoxNzM0OTM2MzYyLCJleHAiOjE3MzUwMjI3NjJ9.rE5v_vyIn7hy_eJkkW0UJtxRbWPjXHoFQLCBK-ZC-bo'
 
 

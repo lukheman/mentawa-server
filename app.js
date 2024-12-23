@@ -3,6 +3,7 @@ const port = 3000
 const app = express()
 
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 const { tokenValidation, registerUser } = require('./utils/utils.js')
 const { userGetByMachineId } = require('./database/db.js')
@@ -13,9 +14,11 @@ app.post('/register', (req, res) => {
     const machineId = req.body.machineId
     const email = req.body.email
 
+    console.log(req.body)
+
     const result = registerUser(name, email, machineId)
 
-    res.json(result)
+    return res.status(200).json(result)
 
 })
 
@@ -33,19 +36,20 @@ app.post('/tokenvalidation', async (req, res) => {
 app.post('/userinformation', async (req, res) => {
 
     const machineId = req.body.machineId
+    // res.set('Content-Type', 'application/json');
 
     try {
         const user = await userGetByMachineId(machineId)
 
         if (!user) {
-            res.status(404).send({
+            return res.status(404).json({
                 status: 'error',
                 message: 'machineId not found'
             })
 
         }
 
-        res.status(200).send({
+        return res.status(200).json({
             status: 'success',
             data: {
                 user
@@ -56,14 +60,13 @@ app.post('/userinformation', async (req, res) => {
 
         console.error(error)
 
-        res.status(500).send({
+        return res.status(500).json({
             status: 'error',
             message: 'an internal server error',
             details: error.message
         })
 
     }
-
 
 })
 

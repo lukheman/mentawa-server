@@ -6,11 +6,15 @@ app.use(express.urlencoded({ extended: true }))
 
 const { tokenValidation } = require('./utils/utils.js')
 
-app.post('/gettoken', (req, res) => {
-    const machineId = req.body.machineId
-})
+app.post('/register', (req, res) => {
 
-app.post('/signup', (req, res) => {
+    const name = req.body.name
+    const machineId = req.body.machineId
+    const email = req.body.email
+
+    const result = registerUser(name, email, machineId)
+
+    res.json(result)
 
 })
 

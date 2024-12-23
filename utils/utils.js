@@ -3,32 +3,52 @@ const { getUserByMachineId } = require('../database/db.js')
 
 const secretkey = '01111000'
 
-const checkToken = async (machine_id) => {
+const tokenValidation = async (machineId, token) => {
 
-    const user = getUserByMachineId(machine_id);
+    try {
+        const user = await getUserByMachineId(machineId);
 
-    user.then(result => {
-        console.log(result)
-        const decoded = jwt.verify(result.token, secretkey)
-        console.log(decoded)
-    })
+        if (user.token === token) {
+            try {
+                const decoded = jwt.verify(user.token, secretkey)
+                if (decoded.machineId === machineId) {
+                    return {
+                        valid: true,
+                        user
+                    }
+                }
 
-    //if (now > new Date(expires_at)) {
-    //    console.error('Token has expired');
-    //    return;
-    //}
+            } catch (error) {
+                // TODO: perbaiki response
+                return {
+                    error: true,
+                    errorMessage: error.message
+                }
+            }
 
-    //try {
-    //    const decoded = jwt.verify(token, secretkey);
-    //    console.log('Token is valid:', decoded);
-    //} catch (err) {
-    //    if (err.name === 'TokenExpiredError') {
-    //        console.error('token has expired')
-    //    } else {
-    //        console.error('invalid token: ', err.message)
-    //    }
-    //}
+        } else {
+
+            return {
+                error: true,
+                errorMessage: 'invalid token'
+            }
+
+        }
+
+    } catch (error) {
+        // TODO: perbaiki response
+        return {
+            error: true,
+            errorMessage: error.message
+        }
+    }
 
 };
 
-checkToken('machine123');
+
+// let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWNoaW5lSWQiOiJtYWNoaW5lMTIzIiwiaWF0IjoxNzM0OTM2MzYyLCJleHAiOjE3MzUwMjI3NjJ9.rE5v_vyIn7hy_eJkkW0UJtxRbWPjXHoFQLCBK-ZC-bo'
+
+
+// const result = tokenValidation('machine123', token)
+
+module.exports = { tokenValidation }

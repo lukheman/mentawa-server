@@ -4,7 +4,8 @@ const app = express()
 
 app.use(express.urlencoded({ extended: true }))
 
-const { tokenValidation } = require('./utils/utils.js')
+const { tokenValidation, registerUser } = require('./utils/utils.js')
+const { userGetByMachineId } = require('./database/db.js')
 
 app.post('/register', (req, res) => {
 

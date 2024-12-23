@@ -8,29 +8,37 @@ const tokenValidation = async (machineId, token) => {
     try {
         const user = await getUserByMachineId(machineId);
 
+        if (!user) {
+            return {
+                status: 'error',
+                message: 'machineId not found'
+            }
+        }
+
         if (user.token === token) {
             try {
                 const decoded = jwt.verify(user.token, secretkey)
                 if (decoded.machineId === machineId) {
                     return {
-                        valid: true,
-                        user
+                        status: 'success',
+                        data: { user }
                     }
                 }
 
             } catch (error) {
                 // TODO: perbaiki response
                 return {
-                    error: true,
-                    errorMessage: error.message
+                    status: 'error',
+                    message: 'an internal server error',
+                    details: error.message
                 }
             }
 
         } else {
 
             return {
-                error: true,
-                errorMessage: 'invalid token'
+                status: 'error',
+                message: 'invalid token'
             }
 
         }
@@ -38,7 +46,7 @@ const tokenValidation = async (machineId, token) => {
     } catch (error) {
         // TODO: perbaiki response
         return {
-            error: true,
+            status: false,
             errorMessage: error.message
         }
     }

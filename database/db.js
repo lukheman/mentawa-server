@@ -23,21 +23,14 @@ const userAdd = (name, email, machineId, token) => {
     )
 }
 
-const getUserByMachineId = (machineId) => {
+const userGetByMachineId = async (machineId) => {
 
-    return new Promise(async (resolve, reject) => {
-        const res = await pool.query(
-            'SELECT * FROM users WHERE machine_id = $1',
-            [machineId],
-        )
+    const res = await pool.query(
+        'SELECT * FROM users WHERE machine_id = $1',
+        [machineId],
+    )
 
-        if (res.rows.length > 0) {
-            resolve(res.rows[0])
-        } else {
-            reject(new Error('machineId not registered in system'))
-        }
-
-    })
+    return res.rows[0]
 
 }
 

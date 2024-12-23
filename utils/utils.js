@@ -53,6 +53,15 @@ const tokenValidation = async (machineId, token) => {
 
 };
 
+const generateToken = (machineId) => {
+
+    const secretkey = '01111000'
+    const payload = { machineId }
+
+    const token = jwt.sign(payload, secretkey, { expiresIn: '1d', algorithm: 'HS256' })
+    return token
+
+}
 
 // let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWNoaW5lSWQiOiJtYWNoaW5lMTIzIiwiaWF0IjoxNzM0OTM2MzYyLCJleHAiOjE3MzUwMjI3NjJ9.rE5v_vyIn7hy_eJkkW0UJtxRbWPjXHoFQLCBK-ZC-bo'
 

@@ -34,7 +34,7 @@ const getUserByMachineId = (machineId) => {
         if (res.rows.length > 0) {
             resolve(res.rows[0])
         } else {
-            reject('machineId not registered in system')
+            reject(new Error('machineId not registered in system'))
         }
 
     })

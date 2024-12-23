@@ -34,4 +34,5 @@ const userGetByMachineId = async (machineId) => {
 
 }
 
-module.exports = { addUser, getUserByMachineId }
+userGetByMachineId('machine123e')
+module.exports = { userAdd, userGetByMachineId }

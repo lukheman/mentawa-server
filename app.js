@@ -6,7 +6,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 const { tokenValidation, registerUser } = require('./utils/utils.js')
-const { userGetByMachineId } = require('./database/db.js')
+const { userGetByMachineId, isMachineIdExist } = require('./database/db.js')
 
 app.post('/register', (req, res) => {
 

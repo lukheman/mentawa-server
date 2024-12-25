@@ -7,7 +7,7 @@ const secretkey = '01111000'
 const tokenValidation = async (machineId, token) => {
 
     try {
-        const user = await getUserByMachineId(machineId);
+        const user = await userGetByMachineId(machineId);
 
         if (!user) {
             return {
@@ -69,7 +69,7 @@ const registerUser = (name, email, machineId) => {
     const token = generateToken(machineId)
     userAdd(name, email, machineId, token)
 
-    return { status: true, message: 'succesfully registered user' }
+    return { status: 'success', message: 'succesfully registered user', data: { token } }
 
 }
 

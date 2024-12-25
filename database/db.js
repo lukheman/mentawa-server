@@ -26,7 +26,7 @@ const userAdd = (name, email, machineId, token) => {
 const userGetByMachineId = async (machineId) => {
 
     const res = await pool.query(
-        'SELECT * FROM users WHERE machine_id = $1',
+        'SELECT email, token, name FROM users WHERE machine_id = $1',
         [machineId],
     )
 

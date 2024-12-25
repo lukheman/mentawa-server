@@ -1,6 +1,7 @@
 const express = require('express')
-const port = 3000
 const app = express()
+
+const port = process.env.PORT || 3000
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -110,5 +111,5 @@ app.post('/ismachineidregistered', async (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log('listing at localhost:' + port)
+    console.log(`App listening on port ${port}`)
 })

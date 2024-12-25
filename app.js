@@ -87,6 +87,26 @@ app.post('/userinformation', async (req, res) => {
     }
 
 })
+
+app.post('/ismachineidregistered', async (req, res) => {
+    const machineId = req.body.machineId
+
+    const result = await isMachineIdExist(machineId)
+
+    if (result) {
+        return res.status(200).json({
+            status: 'success',
+            message: 'machineId is registered'
+        })
+    }
+
+    return res.status(500).json({
+        status: 'error',
+        message: 'machineId is not registered'
+    })
+
+
+
 })
 
 app.listen(port, () => {

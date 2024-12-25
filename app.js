@@ -14,10 +14,28 @@ app.post('/register', (req, res) => {
     const machineId = req.body.machineId
     const email = req.body.email
 
-    console.log(req.body)
+    if (!name) {
+        return res.status(500).json({
+            status: 'error',
+            message: 'required name'
+        })
+    }
+
+    if (!email) {
+        return res.status(500).json({
+            status: 'error',
+            message: 'required email'
+        })
+    }
+
+    if (!machineId) {
+        return res.status(500).json({
+            status: 'error',
+            message: 'required machineId'
+        })
+    }
 
     const result = registerUser(name, email, machineId)
-
     return res.status(200).json(result)
 
 })
@@ -68,6 +86,7 @@ app.post('/userinformation', async (req, res) => {
 
     }
 
+})
 })
 
 app.listen(port, () => {

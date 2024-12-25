@@ -34,5 +34,22 @@ const userGetByMachineId = async (machineId) => {
 
 }
 
-userGetByMachineId('machine123e')
-module.exports = { userAdd, userGetByMachineId }
+const isMachineIdExist = async (machineId) => {
+
+    const res = await pool.query(
+        'SELECT machine_id FROM users WHERE machine_id = $1',
+        [machineId],
+    )
+
+    if (res.rows.length > 0) {
+        return true
+    }
+
+    return false
+
+}
+
+
+// userGetByMachineId('machine123e')
+// console.log(isMachineIdExist('machine123'))
+module.exports = { userAdd, userGetByMachineId, isMachineIdExist }

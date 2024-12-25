@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { getUserByMachineId, userAdd } = require('../database/db.js');
+const { userAdd, userGetByMachineId } = require('../database/db.js');
 const { machineIdSync } = require('node-machine-id')
 
 const secretkey = '01111000'

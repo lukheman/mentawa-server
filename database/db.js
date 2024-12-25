@@ -1,12 +1,12 @@
-const { machineId } = require('node-machine-id')
 const { Pool } = require('pg')
 
 const pool = new Pool({
-    user: 'akmal',
-    host: 'localhost',
-    database: 'mentawa',
-    password: '',
-    post: 5432
+    user: process.env.DATABASE_USER,
+    host: process.env.DATABASE_HOST,
+    database: process.env.DATABASE_NAME,
+    password: process.env.DATABASE_PASSWORD,
+    port: process.env.DATABASE_PORT,
+    ssl: true
 })
 
 const userAdd = (name, email, machineId, token) => {

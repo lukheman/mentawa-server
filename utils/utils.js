@@ -2,8 +2,6 @@ const jwt = require('jsonwebtoken')
 const { userAdd, userGetByMachineId } = require('../database/db.js');
 const { machineIdSync } = require('node-machine-id')
 
-const secretkey = '01111000'
-
 const tokenValidation = async (machineId, token) => {
 
     try {
@@ -18,7 +16,7 @@ const tokenValidation = async (machineId, token) => {
 
         if (user.token === token) {
             try {
-                const decoded = jwt.verify(user.token, secretkey)
+                const decoded = jwt.verify(user.token, process.env.SECRETKEY)
                 if (decoded.machineId === machineId) {
                     return {
                         status: 'success',
@@ -56,10 +54,9 @@ const tokenValidation = async (machineId, token) => {
 
 const generateToken = (machineId) => {
 
-    const secretkey = '01111000'
     const payload = { machineId }
 
-    const token = jwt.sign(payload, secretkey, { expiresIn: '1d', algorithm: 'HS256' })
+    const token = jwt.sign(payload, process.env.SECRETKEY, { algorithm: 'HS256' })
     return token
 
 }

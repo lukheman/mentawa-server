@@ -16,23 +16,30 @@ const tokenValidation = async (machineId, token) => {
         }
 
         if (user.token === token) {
-            try {
-                const decoded = jwt.verify(user.token, process.env.SECRETKEY)
-                if (decoded.machineId === machineId) {
-                    return {
-                        status: 'success',
-                        data: { user }
-                    }
-                }
 
-            } catch (error) {
-                // TODO: perbaiki response
-                return {
-                    status: 'error',
-                    message: 'an internal server error',
-                    details: error.message
-                }
+            return {
+                status: 'success',
+                data: { user }
             }
+
+            //try {
+            //    const decoded = jwt.verify(user.token, process.env.SECRETKEY)
+            //    if (decoded.machineId === machineId) {
+            //        return {
+            //            status: 'success',
+            //            data: { user }
+            //        }
+            //    }
+            //
+            //} catch (error) {
+            //    // TODO: perbaiki response
+            //    console.error(error)
+            //    return {
+            //        status: 'error',
+            //        message: 'an internal server error',
+            //        details: error.message
+            //    }
+            //}
 
         } else {
 

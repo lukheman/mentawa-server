@@ -1,1 +1,1 @@
-{"name":"apimentawa","version":"1.0.0","description":"","main":"app.js","scripts":{"start":"node app.js"},"dependencies":{"dotenv":"^16.4.7","express":"^4.21.2","jsonwebtoken":"^9.0.2","nanoid":"^5.0.9","node-machine-id":"^1.1.12","pg":"^8.13.1"}}
+{"name":"apimentawa","version":"1.0.0","description":"","main":"app.js","scripts":{"start":"node app.js"},"dependencies":{"dotenv":"^16.4.7","express":"^4.21.2","jsonwebtoken":"^9.0.2","nanoid":"^3.3.8","node-machine-id":"^1.1.12","pg":"^8.13.1"}}

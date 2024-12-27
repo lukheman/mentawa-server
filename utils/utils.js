@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const { userAdd, userGetByMachineId } = require('../database/db.js');
 const { machineIdSync } = require('node-machine-id')
+const { nanoid } = require('nanoid')
 
 const tokenValidation = async (machineId, token) => {
 
@@ -52,11 +53,10 @@ const tokenValidation = async (machineId, token) => {
 
 };
 
-const generateToken = (machineId) => {
+const generateToken = () => {
 
-    const payload = { machineId }
-
-    const token = jwt.sign(payload, process.env.SECRETKEY, { algorithm: 'HS256' })
+    // const token = jwt.sign({machineId}, process.env.SECRETKEY, { algorithm: 'HS256' })
+    const token = nanoid(64)
     return token
 
 }

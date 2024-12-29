@@ -1,9 +1,13 @@
-require('dotenv').config()
+const dotenv = require('dotenv')
+
+// load enviroment variabels
+const env = process.env.NODE_ENV || 'development'
+dotenv.config({ path: `.${env}.env` })
 
 const express = require('express')
 const app = express()
 
-const port = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -112,6 +116,6 @@ app.post('/ismachineidregistered', async (req, res) => {
 
 })
 
-app.listen(port, () => {
-    console.log(`App listening on port ${port}`)
+app.listen(PORT, () => {
+    console.log(`Running in ${process.env.NODE_ENV} mode on port ${PORT}`);
 })

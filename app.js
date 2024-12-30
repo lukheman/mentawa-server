@@ -1,121 +1,42 @@
-const dotenv = require('dotenv')
+const dotenv = require("dotenv");
 
 // load enviroment variabels
-const env = process.env.NODE_ENV || 'development'
-dotenv.config({ path: `.${env}.env` })
+console.log(process.env.NODE_ENV);
 
-const express = require('express')
-const app = express()
+// const env = process.env.NODE_ENV || ;
+if (process.env.NODE_ENV == "development") {
+  dotenv.config({ path: `.development.env` });
+} else {
+  dotenv.config({ path: `.env` });
+}
 
-const PORT = process.env.PORT || 3000
+// express app
+const express = require("express");
+const expressLayout = require("express-ejs-layouts");
+const morgan = require("morgan");
 
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+const app = express();
+app.set("view engine", "ejs");
 
-const { tokenValidation, registerUser } = require('./utils/utils.js')
-const { userGetByMachineId, isMachineIdExist } = require('./database/db.js')
+// middleware
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-app.post('/register', (req, res) => {
+// middleware:morgan
+app.use(morgan("tiny"));
 
-    const name = req.body.name
-    const machineId = req.body.machineId
-    const email = req.body.email
+app.use(expressLayout);
+app.set("layout", "layout/main");
 
-    if (!name) {
-        return res.status(500).json({
-            status: 'error',
-            message: 'required name'
-        })
-    }
+// import routes
+const apiRoutes = require("./routes/api.js");
+const userRoutes = require("./routes/user.js");
 
-    if (!email) {
-        return res.status(500).json({
-            status: 'error',
-            message: 'required email'
-        })
-    }
+const PORT = process.env.PORT || 3000;
 
-    if (!machineId) {
-        return res.status(500).json({
-            status: 'error',
-            message: 'required machineId'
-        })
-    }
-
-    const result = registerUser(name, email, machineId)
-    return res.status(200).json(result)
-
-})
-
-app.post('/tokenvalidation', async (req, res) => {
-
-    const machineId = req.body.machineId
-    const token = req.body.token
-
-    const result = await tokenValidation(machineId, token)
-
-    res.json(result)
-
-})
-
-app.post('/userinformation', async (req, res) => {
-
-    const machineId = req.body.machineId
-    // res.set('Content-Type', 'application/json');
-
-    try {
-        const user = await userGetByMachineId(machineId)
-
-        if (!user) {
-            return res.status(404).json({
-                status: 'error',
-                message: 'machineId not found'
-            })
-
-        }
-
-        return res.status(200).json({
-            status: 'success',
-            data: {
-                user
-            }
-        })
-
-    } catch (error) {
-
-        console.error(error)
-
-        return res.status(500).json({
-            status: 'error',
-            message: 'an internal server error',
-            details: error.message
-        })
-
-    }
-
-})
-
-app.post('/ismachineidregistered', async (req, res) => {
-    const machineId = req.body.machineId
-
-    const result = await isMachineIdExist(machineId)
-
-    if (result) {
-        return res.status(200).json({
-            status: 'success',
-            message: 'machineId is registered'
-        })
-    }
-
-    return res.status(500).json({
-        status: 'error',
-        message: 'machineId is not registered'
-    })
-
-
-
-})
+app.use("/api", apiRoutes);
+app.use("/user", userRoutes);
 
 app.listen(PORT, () => {
-    console.log(`Running in ${process.env.NODE_ENV} mode on port ${PORT}`);
-})
+  console.log(`Running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+});

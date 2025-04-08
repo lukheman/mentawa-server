@@ -1,0 +1,2 @@
+string = '1fb6dba17823f689eea4a8cfe932065f3687106b6453537e357b2390e81c6030'
+print(len(string))

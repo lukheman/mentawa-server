@@ -1,0 +1,7 @@
+- [ ] tambahkan validator pattern email
+- [ ] jangan kembalikan machineid di api
+- [ ] cek apakah email telah digunakana atau belum
+- [ ] buat halaman login user
+- [ ] buat validasi bahwa email adalah milik user
+- [ ] buat machineid unique
+- [ ] buat email unique

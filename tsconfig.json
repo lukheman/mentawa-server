@@ -4,7 +4,8 @@
         "tests/**/*"
     ],
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "src/**/*.js"
     ],
     "compilerOptions": {
         /* Visit https://aka.ms/tsconfig to read more about this file */
